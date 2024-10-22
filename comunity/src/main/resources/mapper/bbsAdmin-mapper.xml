@@ -41,4 +41,10 @@
   <delete id="deleteBbsAdmin" parameterType="int">
      DELETE from bbs_admin where id = #{id}
   </delete>
+  
+  <!-- category  -->
+  <select id="selectCategoryByBbsId" parameterType="int" resultType="net.musecom.comunity.model.BbsCategory">
+     SELECT * FROM category WHERE bbsid = #{id};
+  </select>
+  
 </mapper>

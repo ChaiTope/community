@@ -2,30 +2,28 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-<mapper namespace="net.musecom.comunity.mapper.BbsCategoryMapper">  
-  
-  <select id="selectCategoryByBbsId" parameterType="int" resultType="BbsCategory">
-    SELECT * FROM category WHERE bbsid=#{bbsId} ORDER BY categorynum;
-  </select>
-  
-  <insert id="insertCategory" parameterType="BbsCategory">
-     insert into category
-     (bbsid, categorytext, categorynum)
-     values
-     (#{bbsid}, #{categorytext}, #{categorynum}) 
-  </insert>
-
-  <update id="updateCategory" parameterType="BbsCategory">
-    UPDATE category
-    SET
-        bbsid = #{bbsid},
-        categorytext = #{categorytext},
-        categorynum = #{categorynum}
-    WHERE id = #{id}
-  </update>
- 
-  <delete id="deleteBbsAdmin" parameterType="int">
-     DELETE from category where id = #{id}
-  </delete>
+<mapper namespace="net.musecom.comunity.mapper.BbsCategoryMapper">
+  <!-- 
+     int insertCategory(BbsCategory category);
+   -->
+   <delete id="deleteCategory" parameterType="int">
+      DELETE FROM category WHERE id=${id}
+   </delete>
+   
+   <update id="updateCategory" parameterType="BbsCategory">
+     UPDATE category SET
+       categorytext = #{categorytext},
+       categrorynum = #{categorynum}
+     WHERE 
+       id=#{id}  
+   </update>
+   
+   <insert id="insertCategory" parameterType="BbsCategory">
+     INSERT INTO category
+      (bbsid, categorytext, categorynum)
+      SELECT #{bbsid}, #{categorytext}, COALESCE(MAX(categorynum), 0) + 1
+      FROM category
+      WHERE bbsid = #{bbsid}
+   </insert>
+   
 </mapper>

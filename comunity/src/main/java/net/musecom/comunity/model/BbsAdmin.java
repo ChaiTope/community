@@ -1,5 +1,7 @@
 package net.musecom.comunity.model;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -19,6 +21,7 @@ public class BbsAdmin {
   private int allfilesize;
   private String thimgsize;
   private String imgsize;
+  private List<BbsCategory> bbsCategory;
 }
 
 

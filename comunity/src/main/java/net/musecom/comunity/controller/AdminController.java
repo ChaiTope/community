@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.musecom.comunity.mapper.BbsAdminMapper;
-import net.musecom.comunity.mapper.BbsCategoryMapper;
 import net.musecom.comunity.model.BbsAdmin;
 import net.musecom.comunity.model.BbsCategory;
 import net.musecom.comunity.service.BbsAdminService;
@@ -21,8 +21,8 @@ import net.musecom.comunity.service.BbsAdminService;
 @RequestMapping("/admin")
 public class AdminController {
 
-	@Autowired
-	private BbsCategoryMapper categoryMapper;
+	//@Autowired
+	//private BbsCategoryMapper_ categoryMapper;
 	
 	@Autowired
 	private BbsAdminMapper bbsAdminMapper;
@@ -35,7 +35,7 @@ public class AdminController {
 	public String adminList(Model model) {
 		System.out.println("admin 시작");
 
-	    List<BbsAdmin> bbsAdminList = bbsAdminMapper.selectList();
+	    List<BbsAdmin> bbsAdminList = bbsAdminService.getAllBbsList();
 	    String script = "";
 	    for(BbsAdmin admin : bbsAdminList) {
 	    	script += "$('#lgrade"+admin.getId()+"').val('"+admin.getLgrade()+"').prop('selected', true);";
@@ -46,20 +46,25 @@ public class AdminController {
 	    	script += "$('#skin"+admin.getId()+"').val('"+admin.getSkin()+"').prop('selected', true);";
 	    	script += "$('#category"+admin.getId()+"').val('"+admin.getCategory()+"').prop('selected', true);";
 	    
-	        if(admin.getCategory() == 1) {
-	        	List<BbsCategory> categoryList = categoryMapper.selectCategoryByBbsId(admin.getId());
-	        	model.addAttribute("categoryList", categoryList);
-	        }
+            List<BbsCategory> categoryList = bbsAdminService.getBbsCategoryById(admin.getId());
+            admin.setBbsCategory(categoryList.isEmpty() ? null : categoryList);           		
+            		
+            		
+//	        if(admin.getCategory() == 1) {
+//	        	List<BbsCategory> categoryList = categoryMapper.selectCategoryByBbsId(admin.getId());
+//	        	model.addAttribute("categoryList", categoryList);
+//	        }
 	    }
+
         model.addAttribute("script", script);
-		model.addAttribute("lists", bbsAdminMapper.selectList());
+		model.addAttribute("lists", bbsAdminList);
 		return "admin.index";
 	}
 	
 	@GetMapping("/write")
 	public String noticeWrite(Model model) {
-		System.out.println("list" + categoryMapper.selectCategoryByBbsId(1));
-		model.addAttribute("categories", categoryMapper.selectCategoryByBbsId(1));
+		//System.out.println("list" + categoryMapper.selectCategoryByBbsId(1));
+		//model.addAttribute("categories", categoryMapper.selectCategoryByBbsId(1));
 		return "admin.write";
 	}
 	
@@ -97,23 +102,41 @@ public class AdminController {
 		return result;
 	}
 	
-//	@PostMapping("/categoryAdmin)
-//	@ResponseBody
-//	public String categoryAdmin( 		
-//		@RequestParam("id") int id,
-// 		@RequestParam("bbsid") int bbsid,
-// 		@RequestParam("categorytext") String categorytext,
-// 		@RequestParam("categorynum") int categorynum) {
-//
-//		BbsCategory bbsCategory = new BbsCategory();
-//		bbsCategory.setId(id);
-//		bbsCategory.setBbsid(bbsid);
-//		bbsCategory.setCategorytext(categorytext);
-//		bbsCategory.setCategorynum(categorynum);
-//		    
-//		String result = Integer.toString(bbsAdminService.editBbsAdmin(bbsAdmin));
-//
-//		return result;
-//	}
 	
+	//카테고리 추가 삭제 수정
+	@PostMapping("/addCategory")
+	@ResponseBody
+	public String addCategory(@RequestBody BbsCategory category) {
+
+		int result = bbsAdminService.bbsCategoryInsert(category);
+		String res = result > 0 ? "1" : "0";  
+		return res;
+	}
+	
+	//추후
+	@PostMapping("/editCategory")
+	@ResponseBody
+	public String editCategory(@RequestBody List<BbsCategory> categories) {
+		int result = 0;
+		try {
+			for(BbsCategory category:categories) {
+				result = bbsAdminService.bbsCategoryUpdate(category);
+			}
+		}catch(Exception e) {
+			result = 0;
+		}
+		String res = result > 0 ? "1" : "0";  
+		return res;
+
+	}
+	
+	@PostMapping("/delCategory")
+	@ResponseBody
+	public String deleteCategory(@RequestParam("id") int id) {
+		int result = bbsAdminService.bbsCategoryDelete(id);
+		String res = result > 0 ? "1" : "0";
+		return res;
+	}
+	
+
 }

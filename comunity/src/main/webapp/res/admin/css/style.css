@@ -17,6 +17,9 @@ body{
 .comtable input{
 	max-width:40px;
 }
+.comtable input.categoryList{
+	max-width:100%;
+}
 .comtable input.bbstitle{
 	max-width:100px;
 }
@@ -26,4 +29,11 @@ body{
 }
 .comtable select{
    max-width:100%;
+}
+ul.sortable{
+	list-style-type:none;
+}
+ul.sortable li{
+	padding-top:5px;
+	padding-bottom:5px;
 }
