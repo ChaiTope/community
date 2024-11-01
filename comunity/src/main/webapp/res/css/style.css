@@ -12,3 +12,8 @@ body{
         max-width: 1340px;
     }
 }
+
+.comtable th,
+.comtable td{
+	text-align:center;
+}

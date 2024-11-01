@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
-Build-Jdk-Spec: 11
+Built-By: i7E-015
+Build-Jdk: 11.0.23
 Created-By: Maven Integration for Eclipse
 

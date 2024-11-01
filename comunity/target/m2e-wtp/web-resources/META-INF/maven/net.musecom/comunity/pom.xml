@@ -60,6 +60,11 @@
 		    <version>5.4.11</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.12.3</version> 
+		</dependency>
 
 
 		<dependency>
@@ -119,6 +124,13 @@
 		    <artifactId>tiles-servlet</artifactId>
 		    <version>3.0.8</version>
 		</dependency>			
+				
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.18.0</version>
+		</dependency>
 				
 		<!-- AspectJ -->
 		<dependency>
@@ -202,13 +214,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>   
-		
-		  <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
-          <version>2.12.3</version> <!-- 최신 버전 사용 가능 -->
-      </dependency>     
+		</dependency>        
 	</dependencies>
     <build>
         <plugins>
@@ -232,11 +238,6 @@
                     <mainClass>org.test.int1.Main</mainClass>
                 </configuration>
             </plugin>
-            <plugin>
-			  <groupId>org.apache.maven.plugins</groupId>
-			  <artifactId>maven-war-plugin</artifactId>
-			  <version>3.3.2</version>
-			</plugin>
         </plugins>
     </build>
 </project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.musecom.comunity.mapper.FileMapper">
+   
+   <insert id="insertFile" parameterType="fileDto" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO files (orfilename, newfilename, ext, filesize)
+      VALUES (#{orfilename}, #{newfilename}, #{ext}, #{filesize})
+   </insert>
+   
+   <update id="updateFileByBbsId" parameterType="fileDto">
+     UPDATE files SET bbsid = #{bbsid} WHERE id = #{fileid}
+   </update>
+   
+   <delete id="deleteFile" parameterType="long">
+     DELETE from files WHERE id=#{id}
+   </delete>
+   
+   <select id="selectFileByBbsId" parameterType="long" resultType="fileDto">
+      SELECT * FROM files WHERE bbsid = #{bbsid}
+   </select>
+</mapper>

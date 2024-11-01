@@ -10,15 +10,15 @@
       DELETE FROM category WHERE id=${id}
    </delete>
    
-   <update id="updateCategory" parameterType="BbsCategory">
+   <update id="updateCategory" parameterType="bbsCategory">
      UPDATE category SET
        categorytext = #{categorytext},
-       categrorynum = #{categorynum}
+       categorynum = #{categorynum}
      WHERE 
        id=#{id}  
    </update>
    
-   <insert id="insertCategory" parameterType="BbsCategory">
+   <insert id="insertCategory" parameterType="bbsCategory">
      INSERT INTO category
       (bbsid, categorytext, categorynum)
       SELECT #{bbsid}, #{categorytext}, COALESCE(MAX(categorynum), 0) + 1

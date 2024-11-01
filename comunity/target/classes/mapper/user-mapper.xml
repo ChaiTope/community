@@ -3,13 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.musecom.comunity.mapper.MemberMapper">
-  <select id="getMemberUserId" parameterType="String" resultType="Member">
+  <select id="getMemberUserId" parameterType="String" resultType="member">
      SELECT * FROM members WHERE userid = #{userid}
   </select>
-  <select id="getMemberRole" parameterType="int" resultType="MemberRole">
+  <select id="getMemberRole" parameterType="int" resultType="memberRole">
      SELECT * FROM members_role WHERE membersid=#{membersid}
   </select>   
-  <insert id="setInsertMember" parameterType="Member"
+  <insert id="setInsertMember" parameterType="member"
           useGeneratedKeys="true" keyProperty="id">
      insert into members
      (
@@ -24,7 +24,7 @@
      )
   </insert>
   <!-- 권한정보 -->
-  <insert id="setInsertRole" parameterType="MemberRole">
+  <insert id="setInsertRole" parameterType="memberRole">
      insert into members_role (membersid, user_role)
      values
      (#{membersid}, #{userRole})

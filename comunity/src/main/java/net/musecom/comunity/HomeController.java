@@ -31,7 +31,7 @@ public class HomeController {
 	
 		model.addAttribute("userid", userid );
 		
-		return "home";
+		return "main.home";
 	}
 	
 }

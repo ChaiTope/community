@@ -7,15 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
     <title><tiles:getAsString name="title"/></title>
-    <link rel="stylesheet" href="res/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="res/css/style.css" />
+    <link rel="stylesheet" href="/comunity/res/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/comunity/res/css/style.css" />
     
     <!-- script -->
-    <script src="res/js/jquery.min.js"></script>
-    <script src="res/js/popper.min.js"></script>
-    <script src="res/js/bootstrap.min.js"></script>
-    <script src="res/js/regex.js"></script>
-    <script src="res/js/script.js"></script>
+    <script src="/comunity/res/js/jquery.min.js"></script>
+    <script src="/comunity/res/js/popper.min.js"></script>
+    <script src="/comunity/res/js/bootstrap.min.js"></script>
+    <script src="/comunity/res/js/regex.js"></script>
+    <script src="/comunity/res/js/script.js"></script>
   </head>
   <body>
      <div class="container"> 

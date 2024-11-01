@@ -30,7 +30,7 @@
 	      </tr>
 	      <tr>
 	         <td class="text-center">
-	            <input type="reset" value="취소" /> <input type="submit" value=" 로 그 인 " />
+	            <input type="reset" value="취소" /> <input type="submit" value=" 로 그 인 이 어 라 " />
 	         </td>
 	      </tr>
 	      <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />

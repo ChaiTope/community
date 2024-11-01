@@ -37,3 +37,16 @@ ul.sortable li{
 	padding-top:5px;
 	padding-bottom:5px;
 }
+
+.uploadbox{
+	border:1px solid #ccc;
+	background:#ededed;
+	padding:20px;
+}
+.uploadinbox{
+	padding:20px;
+	background:#fff;
+}
+.upfile{
+	display:none;
+}

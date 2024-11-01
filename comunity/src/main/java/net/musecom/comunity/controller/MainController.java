@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.musecom.comunity.dao.MemberDao;
+import net.musecom.comunity.model.FileDto;
 import net.musecom.comunity.model.Member;
 import net.musecom.comunity.model.MemberRole;
 import net.musecom.comunity.service.ClientIpAddress;
@@ -32,6 +33,8 @@ public class MainController {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	private FileDto fileDto = new FileDto();
 	
 	@GetMapping("/register")
 	public String Register(Model model) {
@@ -82,14 +85,14 @@ public class MainController {
 		if(userimg != null && !userimg.isEmpty()) {
 			try {
 			 
-			  fileUpload.setAbsolutePath("members");  //���ϰ�μ���
+			  fileUpload.setAbsolutePath("members"); 
 			  String[] exts = {"jpg", "gif", "png"};
-			  fileUpload.setAllowedExt(exts); //����ϴ� Ȯ���� ����
-			  long maxSize = 1 * 1024 * 1024; //�ִ� 1�ް�
+			  fileUpload.setAllowedExt(exts); 
+			  long maxSize = 1 * 1024 * 1024; 
 			  fileUpload.setMaxSize(maxSize);
-			  String[] fnames = fileUpload.uploadFile(userimg);
-			  dto.setOruserimg(fnames[0]);
-			  dto.setUserimg(fnames[1]);
+			  fileDto = fileUpload.uploadFile(userimg);
+			  dto.setOruserimg(fileDto.getOrfilename());
+			  dto.setUserimg(fileDto.getNewfilename());
 			  
 			}catch(Exception e) {
 				redirectAttributes.addFlashAttribute("error", e.getMessage());
