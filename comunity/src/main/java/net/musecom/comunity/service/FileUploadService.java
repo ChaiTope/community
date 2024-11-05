@@ -40,7 +40,8 @@ public class FileUploadService implements FileUpload {
 
 	@Override
 	public void setMaxSize(long maxSize) {
-        this.maxSize = maxSize;
+		//maxSize 가 0이면 기본값 2MB 설정
+        this.maxSize = (maxSize > 0) ? maxSize : 2 * 1024 * 1024;
 	}
 
 	@Override
@@ -52,6 +53,12 @@ public class FileUploadService implements FileUpload {
 	public void setAbsolutePath(String path) {
 		this.path =sc.getRealPath("/res/upload/") + path + "/";
 		this.orPath = path;
+		System.out.println(this.path);
+		//디렉토리가 없을 경우 생성한다.
+		File dir = new File(this.path);
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
 	}
 
 	@Override
@@ -75,26 +82,27 @@ public class FileUploadService implements FileUpload {
 		fileSize = file.getSize();
 		
 		if(file == null || file.isEmpty()) {
-			throw new IllegalArgumentException("에러가 발생했습니다.");
+			throw new IllegalArgumentException("선택된 파일이 없습니다.");
 		}
 		
 
 		if(maxSize > 0 && file.getSize() > maxSize) {
-			throw new IllegalArgumentException("전체 파일업로드 제한용량 " + maxSize + "를 초과했습니다.");
+			throw new IllegalArgumentException("파일업로드 제한용량 " + maxSize + "를 초과했습니다.");
 		}
 		
 		if(allowedExt != null && allowedExt.length > 0) {
 			boolean isFileOk = false;
 			for(String ext : allowedExt) {
-				if(fileExt.equals(ext)) {
+				if(fileExt.equalsIgnoreCase(ext)) {  //대소문자 상관없이 비교
 					isFileOk = true;
 					break;
 				}
 			}
 			
 			if(!isFileOk) {
-				throw new IllegalArgumentException("에러가 발생했습니다.");
+				throw new IllegalArgumentException("허용되지 않는 확장자." + fileExt);
 			}
+			
 		}
 		
 

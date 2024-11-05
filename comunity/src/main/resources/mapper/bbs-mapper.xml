@@ -11,6 +11,13 @@
        #{bbsid}, #{id}, #{title}, #{writer}, #{password}, #{userid}, #{content}, #{sec}, #{category}
      )
   </insert>
+  <!--  ref 업데이트 -->
+  <update id="refUpdateById" parameterType="map">
+     UPDATE bbs 
+     SET ref = #{ref}
+     WHERE id=#{id}
+  </update>
+  
   
   
   <!-- 답글 삽입 -->

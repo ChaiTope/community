@@ -6,7 +6,7 @@
 <nav class="d-flex justify-content-between">
   <div>
      <a href="./admin/write" class="btn btn-outline-dark mx-2">공지사항등록</a>
-     <a href="admin/mkbbs" class="btn btn-outline-dark mx-2">커뮤니티생성</a>
+     <a href="javascript:void(0)" data-toggle="modal" data-target="#mkbbs" class="btn btn-outline-dark mx-2">커뮤니티생성</a>
      <a href="admin/mkbbs" class="btn btn-outline-dark mx-2">커뮤니티관리</a>
      <a href="admin/mkbbs" class="btn btn-outline-dark mx-2">회원관리</a>
   </div>

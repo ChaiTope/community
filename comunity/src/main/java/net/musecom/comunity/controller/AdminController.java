@@ -61,6 +61,16 @@ public class AdminController {
 		return "admin.index";
 	}
 	
+	@PostMapping("/mkbbs")
+	@ResponseBody
+	public String mkbbsForm(@RequestParam("bbstitle") String bbstitle) {
+		BbsAdmin bbsAdmin = new BbsAdmin();
+		bbsAdmin.setBbstitle(bbstitle);
+		int rs = bbsAdminMapper.insertBbsAdmin(bbsAdmin);
+		String res = (rs > 0)? "1" : "0";
+		return res;
+	}
+	
 	@GetMapping("/write")
 	public String noticeWrite(Model model) {
 		

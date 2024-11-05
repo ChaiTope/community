@@ -9,6 +9,25 @@
   $(function(){
 	 ${script} 
 	 
+	 $(".mkbbsbtn").click(function(){
+		 const bbstitle = $("input[name='mkbbstitle']").val();
+		 if(bbstitle == '') {
+			 alert("커뮤니티 이름을 입력하세요.");
+			 $("input[name='mkbbstitle']").focus();
+			 return;
+		 }
+		 $.post('/comunity/admin/mkbbs?${_csrf.parameterName}=${_csrf.token}&bbstitle='+bbstitle, 
+				 function(data) {
+			         if(data){
+			    	     alert("등록되었습니다.");
+			    	     document.location.reload(true);
+			         }else{
+			    	     alert("문제가 발생했습니다.");
+			    	     return;
+			         } 
+		 });
+	 });
+	 
 	 $("button[id^='edit']").click(function(){
 		const tr = $(this).closest("tr");
         const id = tr.find("input[name='id']").val();
@@ -205,7 +224,8 @@
         <c:set var="fwidth" value="${dim[0] }"/>
         <c:set var="fheight" value="${dim[1] }"/>
         <tr>
-           <td>${list.id }
+           <td>
+              <a href="bbs/list?bbsid=${list.id}" target="_blank">${list.id }</a>
                <input type="hidden" name="id" class="id" value="${list.id }" />
            </td> 
            <td><input type="text" name="bbstitle" class="bbstitle" value="${list.bbstitle}" /></td>
@@ -314,7 +334,7 @@
                  <option value="99">관리자</option>
               </select>
            <!--  파일업로드가 허용이면 파일 새부설정 출력 -->   
-           <c:if test="${list.fgrade > 0 }">
+           <c:if test="${list.fgrade >= 0 }">
                  <br />
                  <a href="javascript:void(0)" data-toggle="modal" data-target="#file-${list.id }">업로드설정</a>
                  
@@ -420,3 +440,37 @@
      
   </tbody>
 </table>
+
+
+<!-- 커뮤니티 등록 -->
+<div class="modal" id="mkbbs">
+                    <div class='modal-dialog'>
+                       <div class="modal-content" style="padding:30px">
+                      
+                          <div class="modal-body text-left"> 
+                            <form id="mkbbsForm" method="post">
+                            
+                             <label class="mt-2">커뮤니티이름</label>
+								<div class="input-group mb-3"> 
+								  <input type="text" 
+								         name="mkbbstitle" 
+								         class="form-control" 
+								         placeholder="커뮤니티이름" 
+								         value="${list.filesize }"
+								         style="max-width:100%">	
+								</div> 
+                              
+								<div class="text-center">
+								   <button type="button" 
+								           class="mkbbsbtn btn btn-warning py-2 px-4">생성</button> 
+						        </div> 
+						    </form>    
+
+                          </div>
+                          
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+                          </div>
+                       </div>
+                    </div>
+                 </div>

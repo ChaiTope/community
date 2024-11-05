@@ -6,10 +6,11 @@ import net.musecom.comunity.model.Bbs;
 
 public interface BbsService {
 
-	int getBbsInsert(Bbs bbs); 
+	void getBbsInsert(Bbs bbs, List<Long> fileIds); 
 	
 	int getBbsCount(int bbsid);
 	List<Bbs> getBbsList(int bbsid, int page, int recordsPerPage);
 	List<Bbs> getSerchBbsList(int bbsid, int page, int recordsPerPage, String key, String val);
+	
 	
 }

@@ -9,9 +9,17 @@
       VALUES (#{orfilename}, #{newfilename}, #{ext}, #{filesize})
    </insert>
    
-   <update id="updateFileByBbsId" parameterType="fileDto">
-     UPDATE files SET bbsid = #{bbsid} WHERE id = #{fileid}
+   <update id="updateFileByBbsId" parameterType="map">
+     UPDATE files SET bbsid = #{bbsId} WHERE id = #{fileId}
    </update>
+   
+   <select id="selectTrashFile" resultType="String">
+     SELECT newfilename from files WHERE bbsid = 0;
+   </select>
+   
+   <delete id="deleteTrashFile">
+      DELETE from files WHERE bbsid = 0;
+   </delete>
    
    <delete id="deleteFile" parameterType="long">
      DELETE from files WHERE id=#{id}
