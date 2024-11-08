@@ -1,0 +1,40 @@
+@charset "UTF-8";
+@font-face{
+	font-family: 'Gowun Dodum';
+	src: url('../fonts/GowunDodum-Regular.eot');
+	src: url('../fonts/GowunDodum-Regular.woff') format(woff),
+		 url('../fonts/GowunDodum-Regular.woff2') format(woff2),
+		 url('../fonts/GowunDodum-Regular.ttf') format('truetype'),
+	  	 url('../fonts/GowunDodum-Regular.svg#GowunDodum'),
+	 	 url('../fonts/GowunDodum-Regular.eot');
+	 	 
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face{
+	font-family: 'Gowun Dodum';
+	src: url('../fonts/GowunDodum-Bold.eot');
+	src: url('../fonts/GowunDodum-Bold.woff') format(woff),
+		 url('../fonts/GowunDodum-Bold.woff2') format(woff2),
+		 url('../fonts/GowunDodum-Bold.ttf') format('truetype'),
+	  	 url('../fonts/GowunDodum-Bold.svg#GowunDodum'),
+	 	 url('../fonts/GowunDodum-Bold.eot');
+	 	 
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face{
+	font-family: 'Gowun Batang';
+	src: url('../fonts/GowunBatang-Regular.eot');
+	src: url('../fonts/GowunBatang-Regular.woff') format(woff),
+		 url('../fonts/GowunBatang-Regular.woff2') format(woff2),
+		 url('../fonts/GowunBatang-Regular.ttf') format('truetype'),
+	  	 url('../fonts/GowunBatang-Regular.svg#GowunDodum'),
+	 	 url('../fonts/GowunBatang-Regular.eot');
+	 	 
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}

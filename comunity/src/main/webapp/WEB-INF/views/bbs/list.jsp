@@ -8,7 +8,7 @@
    location.href="/comunity";
   </script>  
 </c:if>
-<div class="p-5 m-5">
+<div class="p-5 my-4">
    <h1 class="text-center">${adminBbs.bbstitle }</h1>
    <table class="bbslist table-hover">
       <colgroup>
@@ -47,7 +47,7 @@
       </tbody>
    </table>
 
-   <div class="search-and-button">
+   <div class="search-and-button row my-3">
 	   <div class="col-md-5 searchbox">
            <form id="searchForm" name="searchForm" method="get">
 			<div class="input-group mt-3 mb-3">
@@ -64,35 +64,37 @@
 			  </div>
 			  <input type="text" class="form-control" name="searchVal" id="searchInput" placeholder="검색어 입력">
 			  <input type="hidden" id="searchKey" name="searchKey" value="title">
-			  
+			  <input type="hidden" name="bbsid" value="${adminBbs.id }" />
 			  <div class="input-group-append">
                  <button class="btn btn-success" id="searchbutton" type="button">검색</button>
               </div>
 			</div>
           </form>
        </div>
-	   <div class="col-md-7 text-right">
+	   <div class="col-md-7 text-right btn-box">
 	     <a href="bbs.jsp" class="btn btn-success">목록</a>  
 	     <a href="write?bbsid=${adminBbs.id }" class="btn btn-success">글쓰기</a>
-	   </div>
+	   </div>  
    </div>
+   
+   
    	<ul class="pagination justify-content-center">
-     	<li class="page-item"><a class="page-link bg-light" href="?pg=1&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-left-double-line"></i></a></li>
+     	<li class="page-item"><a class="page-link bg-light" href="?bbsid=${adminBbs.id}&page=1&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-left-double-line"></i></a></li>
 	<!-- 이전그룹 -->
 	<c:if test="${paging.startPageOfGroup > 1 }">
-	  <li class="page-item"><a class="page-link" href="?pg=${paging.startPageOfGroup - 1 }&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-left-s-line"></i></a></li>
+	  <li class="page-item"><a class="page-link" href="?bbsid=${adminBbs.id}&page=${paging.startPageOfGroup - 1 }&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-left-s-line"></i></a></li>
 	</c:if>  
 	
 	<c:forEach var="i" begin="${paging.startPageOfGroup }" end="${paging.endPageOfGroup}">
-	   <li class='page-item <c:if test="${ i == paging.currentPage}">active</c:if>'><a class="page-link" href="?pg=${i}&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}">${i }</a></li>
+	   <li class='page-item <c:if test="${ i == paging.currentPage}">active</c:if>'><a class="page-link" href="?bbsid=${adminBbs.id}&page=${i}&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}">${i }</a></li>
 	</c:forEach>  
 	  
 	  
 	 <!-- 다음그룹 -->
 	<c:if test="${paging.endPageOfGroup < paging.totalPages }">  
-	  <li class="page-item"><a class="page-link" href="?pg=${paging.endPageOfGroup + 1}&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-right-s-line"></i></a></li>
+	  <li class="page-item"><a class="page-link" href="?bbsid=${adminBbs.id}&page=${paging.endPageOfGroup + 1}&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-right-s-line"></i></a></li>
 	</c:if>  
-	<li class="page-item"><a class="page-link bg-light" href="?pg=${paging.totalPages }&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-right-double-line"></i></a></li>
+	<li class="page-item"><a class="page-link bg-light" href="?bbsid=${adminBbs.id}&page=${paging.totalPages }&searchKey=${encodeSearchKey}&searchVal=${encodeSearchVal}"><i class="ri-arrow-right-double-line"></i></a></li>
 	</ul>   
 </div>
 
@@ -106,13 +108,14 @@
 			$("#searchtext").text(selectedText);
 		});
 		
-		$("#searchForm").button(function(){
+		$("#searchbutton").click(function(){
 			const keyword = $("#searchInput").val().trim();
 			if(keyword === ""){
 				alert("검색어를 입력하세요.");
 				$("#searchInput").focus();
 				return false;
 			}
+			$("#searchForm").submit();
 		});
 	});
 	</script>

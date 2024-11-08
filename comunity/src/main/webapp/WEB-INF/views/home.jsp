@@ -6,7 +6,6 @@
 <c:if test="${not empty error }">
   <script>
     alert("${error}");
-    history.go(-1);
   </script>
 </c:if>
 <c:if test="${param.logout != null }">

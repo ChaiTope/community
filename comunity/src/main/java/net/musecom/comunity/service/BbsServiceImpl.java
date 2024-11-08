@@ -36,8 +36,9 @@ public class BbsServiceImpl implements BbsService {
 	@Override
 	public int getBbsCount(int bbsid) {
 		
-		return bbsMapper.selectCountBbs(getBbsCount(bbsid));
+		return bbsMapper.selectCountBbs(bbsid);
 	}
+
 
 	@Override
 	public List<Bbs> getBbsList(int bbsid, int page, int recordsPerPage) {
@@ -45,9 +46,15 @@ public class BbsServiceImpl implements BbsService {
 	}
 
 	@Override
-	public List<Bbs> getSerchBbsList(int bbsid, int page, int recordsPerPage, String key, String val) {
-		
+	public List<Bbs> getSerchBbsList(int bbsid, int page, int recordsPerPage, String key, String val) {	
 		return bbsMapper.selectSearchBbs(bbsid, page, recordsPerPage, key, val);
+	}
+	
+
+	@Override
+	public int getSearchBbsCount(int bbsid, String key, String val) {
+		
+		return bbsMapper.selectSearchCountBbs(bbsid, key, val);
 	}
 
 

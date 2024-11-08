@@ -3,6 +3,7 @@ encoding//src/main/java/net/musecom/comunity/controller/AdminController.java=UTF
 encoding//src/main/java/net/musecom/comunity/controller/BbsController.java=UTF-8
 encoding//src/main/java/net/musecom/comunity/controller/MainController.java=UTF-8
 encoding//src/main/java/net/musecom/comunity/model/BbsAdmin.java=UTF-8
+encoding//src/main/java/net/musecom/comunity/service/BbsServiceImpl.java=UTF-8
 encoding//src/main/java/net/musecom/comunity/service/FileService.java=UTF-8
 encoding//src/main/java/net/musecom/comunity/service/FileUploadService.java=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8

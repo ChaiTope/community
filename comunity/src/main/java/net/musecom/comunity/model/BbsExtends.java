@@ -11,4 +11,6 @@ public class BbsExtends {
   //private LocalDateTime createDate;
   private String formattedDate;
   private List<String> fileExt;
+  private List<String> newfilename;
+  private long num;
 }

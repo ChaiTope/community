@@ -40,7 +40,7 @@
 		 //파일 선택 확인
 		 if(fileInput.files.length > 0) {
 			formData.append('file', fileInput.files[0]);
-		    formData.append('bbsid', 1);
+		    formData.append('bbsid', ${adminBbs.id});
 			const fileSize = fileInput.files[0].size;
 			//const csrfToken = $("input[name='${_csrf.parameterName }']").val();
 			//formData.append("${_csrf.parameterName }", csrfToken);
@@ -115,7 +115,30 @@
        </select>
     </div>
    </c:if>
-    
+   
+   <!-- 비회원일 때 -->
+   <sec:authorize access="!isAuthenticated()">
+   </sec:authorize>
+     <lable class="col-2 text-right  py-2 my-2">
+       이름
+     </lable>
+     <div class="col-4  py-2 my-2">
+       <input type="text" class="form-control" name="writer" id="writer" />
+     </div> 
+     <lable class="col-2 text-right  py-2 my-2">
+       비밀번호
+     </lable>
+     <div class="col-4  py-2 my-2">
+       <input type="password" class="form-control" name="password" id="password" />
+     </div> 
+     <input type="hidden" name="userid" value="guest" />
+   <!-- 회원일 때 -->
+   <sec:authorize access="isAuthenticated()">
+   	 <input type="hidden" name="writer" value="${member.username }" />
+   	 <input type="hidden" name="userid" value="${member.userid }" />
+   	 <input type="hidden" name="password" value="${member.userid }" />
+   	 
+   </sec:authorize>
     <label class="col-2 text-right  py-2 my-2">
        제목
     </label>
@@ -126,7 +149,7 @@
        <textarea name="content" id="content"></textarea>
     </div>
     
-    <c:if test="${adminBbs.fgrade > 0}">
+    <c:if test="${adminBbs.fgrade >= 0}">
     <div class="col-12 my-2 py-2">
        <div class="uploadbox">
           <div class="text-right">
@@ -141,12 +164,14 @@
     </c:if>
     
     <div class="col-12 text-center  py-2 my-2">
+      <lable>
+      	<input type="checkbox" name="sec" value="1" />비밀글
+      </lable>
+    </div>
+    
+    <div class="col-12 text-center  py-2 my-2">
       <input type="hidden" name="bbsAdminId" value="${adminBbs.id }" />
-       <input type="hidden" name="writer" value="운영자" />
-       <input type="hidden" name="password" value="admin" />
-       <input type="hidden" name="userid" value="admin" />
        <input type="hidden" name="sec" value="0" />
-       <input type="hidden" name="admin" value="admin" />
        <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
        <div id="fileIdField"></div>
        <button type="reset" class="btn btn-danger me-3"> 취 소 </button>

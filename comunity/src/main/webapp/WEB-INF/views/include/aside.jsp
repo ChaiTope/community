@@ -20,7 +20,7 @@
 </sec:authorize>
 
 <sec:authorize access="!isAuthenticated()">
-	<form action="./login" method="post">
+	<form action="/comunity/login" method="post">
 	   <table>
 	      <tr>
 	         <td><input type="text" name="userid" id="userid" placeholder="아이디"></td>

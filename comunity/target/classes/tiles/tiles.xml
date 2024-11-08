@@ -38,5 +38,28 @@
     <put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
   </definition>
   
+ <definition name="gallery.*" template="/WEB-INF/views/layouts/layout.jsp">
+    <put-attribute name="title" value="커뮤니티" />
+    <put-attribute name="header" value="/WEB-INF/views/include/header.jsp" />
+    <put-attribute name="aside" value="/WEB-INF/views/include/aside.jsp" />
+    <put-attribute name="body" value="/WEB-INF/views/gallery/{1}.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
+  </definition>
+  
+  <definition name="blog.*" template="/WEB-INF/views/layouts/layout.jsp">
+    <put-attribute name="title" value="커뮤니티" />
+    <put-attribute name="header" value="/WEB-INF/views/include/header.jsp" />
+    <put-attribute name="aside" value="/WEB-INF/views/include/aside.jsp" />
+    <put-attribute name="body" value="/WEB-INF/views/blog/{1}.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
+  </definition>
+  
+ <definition name="article.*" template="/WEB-INF/views/layouts/layout.jsp">
+    <put-attribute name="title" value="커뮤니티" />
+    <put-attribute name="header" value="/WEB-INF/views/include/header.jsp" />
+    <put-attribute name="aside" value="/WEB-INF/views/include/aside.jsp" />
+    <put-attribute name="body" value="/WEB-INF/views/article/{1}.jsp" />
+    <put-attribute name="footer" value="/WEB-INF/views/include/footer.jsp" />
+  </definition>
   
 </tiles-definitions>
