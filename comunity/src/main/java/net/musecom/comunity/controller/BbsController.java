@@ -31,7 +31,7 @@ import net.musecom.comunity.model.FileDto;
 import net.musecom.comunity.model.Member;
 import net.musecom.comunity.service.BbsAdminService;
 import net.musecom.comunity.service.BbsService;
-import net.musecom.comunity.service.ContentsControll;
+import net.musecom.comunity.service.ContentsService;
 import net.musecom.comunity.service.FileService;
 import net.musecom.comunity.service.MemberService;
 import net.musecom.comunity.util.Paging;
@@ -56,7 +56,7 @@ public class BbsController {
 	private ServletContext sc;
 
 	@Autowired
-	private ContentsControll contentsControll;  //html 태그 정리를 위한 클래스
+	private ContentsService contentsControll;  //html 태그 정리를 위한 클래스
 	
 	
 	/****************************************************************************
@@ -177,7 +177,7 @@ public class BbsController {
 		    bbs.setNum(num);
 		    
 		    String contents = contentsControll.extractParagraphs(bbs.getContent());
-		    bbs.setContent(contentsControll.cutParagraph(contents, 30));
+		    bbs.setContent(contentsControll.cutParagraph(contents, 100));
 		    num--;
 		}
 		
@@ -249,7 +249,7 @@ public class BbsController {
         @RequestParam("content") String content,
         @RequestParam("writer") String writer,
         @RequestParam("password") String password,
-        @RequestParam("sec") byte sec,
+        @RequestParam(name = "sec", defaultValue="0") byte sec,
         @RequestParam("userid") String userid,
         @RequestParam(name = "category", required = false) String category,
         Model model) {
@@ -261,7 +261,7 @@ public class BbsController {
 	        bbs.setBbsid(bbsid);
 	        bbs.setWriter(writer);
 	        bbs.setPassword(password);
-	        bbs.setSec(sec);
+	        bbs.setSec(sec);	        
 	        bbs.setUserid(userid);
 	        bbs.setCategory(category);
 	        

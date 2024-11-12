@@ -31,7 +31,7 @@
         <c:forEach var="post" items="${bbslist }">
         <!-- 루프 -->
         <tr>
-           <td class="text-center">${post.id }</td>
+           <td class="text-center">${post.num }</td>
            <td class="ellipsis">
               <a href="view?id=${post.id}&bbsid=${adminBbs.id }&pg=${paging.currentPage}">${post.title }</a> 
                 <c:forEach var="ext" items="${post.fileExt }">

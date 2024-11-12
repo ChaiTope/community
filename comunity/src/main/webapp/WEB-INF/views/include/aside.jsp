@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<h1>aside</h1>
+<a href="/comunity"><img src="res/images/logo.png" class="img-fluid log" alt="logo"></a>
 
 <sec:authorize access="isAuthenticated()">
    <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
@@ -21,19 +21,16 @@
 
 <sec:authorize access="!isAuthenticated()">
 	<form action="/comunity/login" method="post">
-	   <table>
-	      <tr>
-	         <td><input type="text" name="userid" id="userid" placeholder="아이디"></td>
-	      </tr>
-	      <tr>
-	         <td><input type="password" name="userpass" id="userpass" placeholder="비밀번호"></td>
-	      </tr>
-	      <tr>
-	         <td class="text-center">
-	            <input type="reset" value="취소" /> <input type="submit" value=" 로 그 인 이 어 라 " />
-	         </td>
-	      </tr>
-	      <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-	   </table>
+	<div class="px-3 py-2">
+	   <input type="text" name="userid" id="userid" class="form-control" placeholder="아이디">
+	</div>
+	<div class="px-3 py-2">
+	   <input type="password" class="form-control" name="userpass" id="userpass" placeholder="비밀번호"></td>
+	</div>
+	<div class="px-3 py-2 text-right">
+	   <input type="reset" value=" 취소 " class="btn btn-warning"/> 
+	   <input type="submit" value=" 로 그 인 " class="btn btn-success" />
+	</div>
+	   <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 	</form>
 </sec:authorize>

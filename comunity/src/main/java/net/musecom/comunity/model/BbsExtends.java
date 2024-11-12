@@ -12,5 +12,5 @@ public class BbsExtends {
   private String formattedDate;
   private List<String> fileExt;
   private List<String> newfilename;
-  private long num;
+  private long num;  //각 게시판 게시물 번호
 }

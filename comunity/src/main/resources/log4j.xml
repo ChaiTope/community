@@ -15,12 +15,27 @@
 	<logger name="net.musecom.comunity">
 		<level value="info" />
 	</logger>
+	<!-- -->
+	<logger name="org.apache.ibatis">
+	   <level value="debug" />
+	   <appender-ref ref="console" />
+	</logger>
 	
-	<!--  mybatis 
+	<logger name="java.sql">
+	   <level value="debug" />
+	   <appender-ref ref="console" />
+	</logger>
+	
+	<logger name="org.springframework.jdbc.core">
+	   <level value="debug" />
+	   <appender-ref ref="console" />
+	</logger> 
+	
+	<!--  mybatis 	
 	<logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger">
 	    <level value="DEBUG" />
 	</logger>
-	-->
+   -->
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
@@ -35,11 +50,11 @@
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 
 	<logger name="org.springframework.security">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 
 	<!-- Root Logger -->

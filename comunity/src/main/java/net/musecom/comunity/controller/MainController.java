@@ -130,12 +130,13 @@ public class MainController {
 	public String memberIndex(Model model) {
 		return "member.index";
 	}
-	   
-	@GetMapping("/insta")
-   public String instagram(@RequestParam("instaid") String instaid, Model model ) {
-      InstargramParser instgramParser = new InstargramParser();
-      model.addAttribute("inst", instgramParser.getStringText(instaid));
-      return "main.insta";
-   }
+	
 
+	@GetMapping("/insta")
+	public String instagram(@RequestParam("instaid") String instaid, Model model ) {
+		InstargramParser instgramParser = new InstargramParser();
+		model.addAttribute("insta", instgramParser.getStringText(instaid));
+		return "main.insta";
+	}
+	
 }

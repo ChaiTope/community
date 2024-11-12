@@ -115,30 +115,29 @@
        </select>
     </div>
    </c:if>
-   
-   <!-- 비회원일 때 -->
-   <sec:authorize access="!isAuthenticated()">
-   </sec:authorize>
-     <lable class="col-2 text-right  py-2 my-2">
-       이름
-     </lable>
-     <div class="col-4  py-2 my-2">
-       <input type="text" class="form-control" name="writer" id="writer" />
-     </div> 
-     <lable class="col-2 text-right  py-2 my-2">
-       비밀번호
-     </lable>
-     <div class="col-4  py-2 my-2">
-       <input type="password" class="form-control" name="password" id="password" />
-     </div> 
-     <input type="hidden" name="userid" value="guest" />
-   <!-- 회원일 때 -->
-   <sec:authorize access="isAuthenticated()">
-   	 <input type="hidden" name="writer" value="${member.username }" />
-   	 <input type="hidden" name="userid" value="${member.userid }" />
-   	 <input type="hidden" name="password" value="${member.userid }" />
-   	 
-   </sec:authorize>
+    
+    <!-- 비회원일때 -->
+    <sec:authorize access="!isAuthenticated()">
+        <label class="col-2 text-right  py-2 my-2">
+           이름 
+        </label>
+        <div class="col-4  py-2 my-2">
+          <input type="text" class="form-control" name="writer" id="writer" />
+        </div>   
+        <label class="col-2 text-right  py-2 my-2">
+           비밀번호 
+        </label>
+        <div class="col-4  py-2 my-2">
+          <input type="password" class="form-control" name="password" id="password" />
+        </div>  
+        <input type="hidden" name="userid" value="guest">
+    </sec:authorize>
+    <!-- 회원일때 -->
+    <sec:authorize access="isAuthenticated()">
+      <input type="hidden" name="writer" value="${member.username }">
+      <input type="hidden" name="userid" value="${member.userid }">
+      <input type="hidden" name="password" value="${member.userid }">
+    </sec:authorize>
     <label class="col-2 text-right  py-2 my-2">
        제목
     </label>
@@ -162,16 +161,14 @@
        </div>
     </div>
     </c:if>
-    
-    <div class="col-12 text-center  py-2 my-2">
-      <lable>
-      	<input type="checkbox" name="sec" value="1" />비밀글
-      </lable>
+    <div class="col-12 text-right  py-2 my-2">
+       <label>
+          <input type="checkbox" name="sec" value="1"> 비밀글
+       </label>
     </div>
-    
     <div class="col-12 text-center  py-2 my-2">
-      <input type="hidden" name="bbsAdminId" value="${adminBbs.id }" />
-       <input type="hidden" name="sec" value="0" />
+     
+       <input type="hidden" name="bbsAdminId" value="${adminBbs.id }" />
        <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
        <div id="fileIdField"></div>
        <button type="reset" class="btn btn-danger me-3"> 취 소 </button>

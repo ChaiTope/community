@@ -15,15 +15,35 @@
      <!-- 루프 -->
      <c:forEach var="post" items="${bbslist }">
       <div class="col-md-4 my-3">
-         <a href="view?id=${post.id}&bbsid=${adminBbs.id }&pg=${paging.currentPage}" class="card">
-            
+         <a href="view?id=${post.id}&bbsid=${adminBbs.id }&pg=${paging.currentPage}" class="card card-gallery">
+           
+           <c:choose>
+              <c:when test="${not empty post.newfilename[0] }">
             <img class="card-img-top" 
-            src="/comunity/res/upload/${adminBbs.id }/${post.newfilename[0]}" 
-            alt="${fname }" 
-            onerror="${noImgage }"/>
+                 src="/comunity/res/upload/${adminBbs.id }/${post.newfilename[0]}" 
+                 alt="${post.newfilename[0]}" 
+            />
+              </c:when>
+              <c:otherwise>
+                <img src="card-img-top" src="res/images/noImage.jpg" alt="이미지가 없습니다." />
+              </c:otherwise>
+           </c:choose>   
             <div class="card-body">
                <h5 class="card-title">${post.title }</h5>
-               <p class="card-text">%{post.content}</p>
+               <div class="text-conf offset-3 col-9 d-flex 
+                           align-items-center justify-content-between 
+                           border-bottom py-2 mb-2">
+                  <div class="date">
+                    ${post.formattedDate } 
+                  </div>
+                  <div class="writer">
+                    ${post.writer }
+                  </div>
+                  <div class="hit">
+                    ${post.hit }
+                  </div>
+               </div>
+               <p class="card-text">${post.content}</p>
             </div>
          </a>
       </div>
@@ -104,7 +124,4 @@
 		});
 	});
 	
-	function noImage(){
-		$("img.card-img-top").attr("src", ".comunity/images/noImage.jpg");
-	}
 	</script>

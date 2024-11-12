@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+http://localhost:8080/comunity/insta?instaid=아이디
  ${insta }
 </body>
 </html>
