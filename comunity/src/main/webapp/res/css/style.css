@@ -17,21 +17,87 @@ h1, h2, h3, h3, h5, h6{
         max-width: 1340px;
     }
 }
+.aside{
+	height:100%;
+}
+
 .form-group {
     margin-bottom: 0;
 }
-.list-group-item-dashed{
-	border: 1px dashed rgba(0, 0, 0, .125);
+.latest-box{
+	height:366px;
+	overflow:hidden;
+}
+.latest-list{
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+.latest-list span.date{
+	float:right;
+}
+.latest-list li a{
+	display:block;
+	width:100%;
+	padding:6px 15px;
+	border-bottom: 1px dashed rgba(0, 0, 0, .125);
 	white-space:nowrap;
 	overflow:hidden;
 	text-overflow:ellipsis;
+	color:#333;
 }
+.latest-list li a i{
+	margin-right:10px;
+}
+.latest-list li a:hover{
+	text-decoration:none;
+	background-color:#ededed;
+}	
 .gallery{
 	list-style-type:none;
 	margin:0;
 	padding:0;
 	border:1px solid rgba(0, 0, 0, .125);
 }
+.img-gall{
+	height:100px;
+}
+
+.infobox div {
+	position:relative;	
+	padding-left:15px;
+	padding-right:15px;
+}
+.infobox div:not(:last-child)::after{
+	content:"";
+	display:block;
+	position:absolute;
+	width:2px;
+	height:15px;
+	right:0;
+	top:5px;
+	background-color: rgba(0,0,0,0.125);
+}
+
+/***** PASS ***********/
+.bbspass{
+	margin:80px auto;
+	width:500px;
+	padding:50px;
+	border:1px solid #ddd;
+	box-shadow:0 0 15px 0 rgba(0,0,0,0.084);
+}
+.password{
+	margin-bottom:20px;
+}
+.btn-box{
+	text-align:center;
+}
+.btn-box button{
+	padding-left:30px;
+	padding-right:30px;
+}
+
 /********* bbsList ***********/
 .bbslist{
 	width:100%;

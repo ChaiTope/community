@@ -1,5 +1,8 @@
 package net.musecom.comunity.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.musecom.comunity.dao.MemberDao;
+import net.musecom.comunity.model.BbsAdmin;
 import net.musecom.comunity.model.FileDto;
 import net.musecom.comunity.model.Member;
 import net.musecom.comunity.model.MemberRole;
+import net.musecom.comunity.service.BbsAdminService;
+import net.musecom.comunity.service.BbsService;
 import net.musecom.comunity.service.ClientIpAddress;
 import net.musecom.comunity.service.FileUploadService;
 import net.musecom.comunity.service.InstargramParser;
@@ -35,11 +41,25 @@ public class MainController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private BbsService bbsService;
+	
+	@Autowired
+	private BbsAdminService bbsAdminService;
+	
 	private FileDto fileDto = new FileDto();
 	
 	@GetMapping("/register")
 	public String Register(Model model) {
-		return "register";
+		
+	      //인기검색어 출력
+	      List<Map<String, Object>> popularKeywords = bbsService.getPopularKeyword();
+	      model.addAttribute("popularKeywords", popularKeywords);
+	      
+	      List<BbsAdmin> bbsAdminLists = bbsAdminService.getAllBbsList();
+	      model.addAttribute("bbsAdminLists", bbsAdminLists );
+
+		return "main.register";
 	}
 		
 	@PostMapping("/register")
@@ -111,23 +131,24 @@ public class MainController {
 		
 		dao.insertMemRole(rdto);
 				
-		//redirect 일때 정보 전달 방법
+		//redirect �씪�븣 �젙蹂� �쟾�떖 諛⑸쾿
 		redirectAttributes.addFlashAttribute("memberok", "ok");
 		
 		return "redirect:/";
 	}
 	
-//	@GetMapping("/login")
-//    public String LoginForm(@RequestParam(value="error", required=false) String error, Model model) {
-//		if(error != null) {
-//			model.addAttribute("errorMessage", "아이디 또는 비밀번호가 틀렸습니다.");
-//		}
-//		return "login";
-//	}
-//	
+	@GetMapping("/login")
+    public String LoginForm(@RequestParam(value="error", required=false) String error, Model model) {
+		if(error != null) {
+			model.addAttribute("errorMessage", "�븘�씠�뵒 �삉�뒗 鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎.");
+		}
+		return "main.login";
+	}
+	
 	
 	@GetMapping("/member")
 	public String memberIndex(Model model) {
+		
 		return "member.index";
 	}
 	

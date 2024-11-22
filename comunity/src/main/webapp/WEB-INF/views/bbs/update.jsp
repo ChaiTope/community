@@ -28,57 +28,24 @@
    const maxAllFileSize = 50000000;  //나중에 db에서 확인함
 
    $(function(){
-	 let upload= ${adminBbs.fgrade >= 0 ? 'true' : 'false'};  
-	 let insertbar = upload
-	                    ? ['insert', ['link', 'picture', 'video']]
-	                    : ['insert', ['link']];
-	 
 	 $("#content").summernote({
-		 lang: 'ko-KR',
-		 height: 350,
-		 toolbar: [
-			  ['style', ['style']],
-			  ['font', ['bold', 'underline', 'clear']],
-			  ['fontname', ['fontname']],
-			  ['color', ['color']],
-			  ['para', ['ul', 'ol', 'paragraph']],
-			  ['table', ['table']],
-			  insertbar,
-			  ['view', ['fullscreen', 'codeview', 'help']],
-			],
-		 callbacks: {
-			 onImageUpload: function(files){
-				 uploadFile(files[0], true);
-			 },
-			 onMediaDelete: function(target){
-				const fileUrl = target[0].src;
-			    const relativePath = new URL(fileUrl).pathname; //상대경로로 추출
-			    console.log(relativePath);
-				$(".uploadinbox .upload-file a[href='"+relativePath+"']")
-				.closest('.upload-file')
-				.hide();
-				
-				console.log(relativePath);
-			 }
-		 }
+		 lange: 'ko-KR',
+		 height: 350
 	 });
 	 
 	 $("#upfile").change(function(){
-		 const fileInput = $("#upfile")[0];	 
-	     if(fileInput.files.length > 0) {
-	    	 uploadFile(fileInput.files[0], true);
-	     }
-	 });
-	 
-	 
-	 //파일 업로드 함수
-	 function uploadFile(file, insertIntoEditor){
-		
+		 const fileInput = $("#upfile")[0];
 		 const formData = new FormData();
-		 formData.append('file', file);
-		 formData.append('bbsid', ${adminBbs.id});
 		 
-		 $.ajax({
+		 //파일 선택 확인
+		 if(fileInput.files.length > 0) {
+			formData.append('file', fileInput.files[0]);
+		    formData.append('bbsid', ${adminBbs.id});
+			const fileSize = fileInput.files[0].size;
+			//const csrfToken = $("input[name='${_csrf.parameterName }']").val();
+			//formData.append("${_csrf.parameterName }", csrfToken);
+			
+			$.ajax({
 				url: '/comunity/bbs/upload',
 				type: 'POST',
 				data: formData,
@@ -95,24 +62,21 @@
 				    	$("#fileIdField")
 				    	     .append('<input type="hidden" name="fileId[]" value="'+res.fileId+'">');
 
-				    	const uploadHtml = '<div class="upload-file">'+ 
-						                   '<a href="'+res.fileUrl+'" target="_blank">'+res.orFileName+'</a> '+
-						                   '<a href="#" class="delete-file" data-file-id="'+res.fileId+'"><i class="ri-close-large-line"></i></a>'
+				    	const uploadfile = '<div class="upload-file">'+ 
+						                   '<a href="'+res.fileUrl+'" target="_blank">'+res.orFileName+'</a>'+
 						                   '</div>';	
 						//업로드 박스에 링크와 파일이름 추가
-				    	$(".uploadinbox").append(uploadHtml);
+				    	$(".uploadinbox").append(uploadfile);
 						
 						//summernote에 이미지 또는 파일 추가
-						if(insertIntoEditor){
-							if(res.ext.toLowerCase() =='jpg' || res.ext.toLowerCase() == 'png' || res.ext.toLowerCase() == 'gif' || res.ext.toLowerCase()=='svg'){
-								$('#content').summernote('insertImage', res.fileUrl);
-							}else{
-								$('#content').summernote('createLink', {
-									text: res.orFileName,
-									url: res.fileUrl,
-									isNewWindow: true
-								});
-							}
+						if(res.ext.toLowerCase() =='jpg' || res.ext.toLowerCase() == 'png' || res.ext.toLowerCase() == 'gif' || res.ext.toLowerCase()=='svg'){
+							$('#content').summernote('insertImage', res.fileUrl);
+						}else{
+							$('#content').summernote('createLink', {
+								text: res.orFileName,
+								url: res.fileUrl,
+								isNewWindow: true
+							});
 						}
 				    }else{
 				    	alert("파일 업로드에 실패했습니다." + res.error);
@@ -122,31 +86,32 @@
 				error: function(){
 					alert("문제가 발생했습니다.");
 				}
-			});
-	    }
-	 
-	 
-	 $(document).on('click', '.delete-file', function(e){
-		e.preventDefault();
-		//url 가져오기
-		const fileUrl = $(this).siblings('a').attr('href');
-		
-		$("img[src='"+fileUrl+"']").hide();
-		$(this).closest('.upload-file').hide();
+			})
+		 }else{
+			 alert("change론 안되지롱");
+		 }
+		 
 	 });
+	 
+	 $("#category").val('${bbs.category}').prop("selected", true);
 	 
   });
 </script>
 <div class="p-5 my-3 bg-white shadow-sm rounded">
-
- <form class="row" action="/comunity/bbs/write" method="post">
-
+<c:choose>
+  <c:when test="${adminBbs.fgrade > 0}">
+     <form class="row" action="/comunity/bbs/update" method="post"  enctype="multipart/form-data">
+  </c:when>
+  <c:otherwise>
+     <form class="row" action="/comunity/bbs/update" method="post">
+  </c:otherwise> 
+</c:choose>  
   <c:if test="${adminBbs.category > 0}">
     <label class="col-2 text-right py-3 my-3">
        카테고리
     </label>
     <div class="col-10  py-2 my-2">
-       <select name="category" class="form-control">
+       <select name="category" id="category" class="form-control">
           <c:forEach items="${categories }" var="category">
              <option value="${category.categorytext }">${category.categorytext }</option>
           </c:forEach>
@@ -155,35 +120,29 @@
    </c:if>
     
     <!-- 비회원일때 -->
-    <sec:authorize access="!isAuthenticated()">
         <label class="col-2 text-right  py-2 my-2">
            이름 
         </label>
         <div class="col-4  py-2 my-2">
-          <input type="text" class="form-control" name="writer" id="writer" />
+          <input type="text" class="form-control" name="writer" id="writer" value="${bbs.writer }"/>
         </div>   
         <label class="col-2 text-right  py-2 my-2">
            비밀번호 
         </label>
         <div class="col-4  py-2 my-2">
-          <input type="password" class="form-control" name="password" id="password" />
+          <input type="password" class="form-control" name="password" id="password" value="${bbs.password}" />
         </div>  
         <input type="hidden" name="userid" value="guest">
-    </sec:authorize>
-    <!-- 회원일때 -->
-    <sec:authorize access="isAuthenticated()">
-      <input type="hidden" name="writer" value="${member.username }">
-      <input type="hidden" name="userid" value="${member.userid }">
-      <input type="hidden" name="password" value="${member.userid }">
-    </sec:authorize>
+
+
     <label class="col-2 text-right  py-2 my-2">
        제목
     </label>
     <div class="col-10  py-2 my-2">
-       <input type="text" class="form-control" name="title" id="title" />
+       <input type="text" class="form-control" name="title" id="title" value="${bbs.title }" />
     </div>   
     <div class="col-12  py-2 my-2">
-       <textarea name="content" id="content"></textarea>
+       <textarea name="content" id="content">${bbs.content }</textarea>
     </div>
     
     <c:if test="${adminBbs.fgrade >= 0}">

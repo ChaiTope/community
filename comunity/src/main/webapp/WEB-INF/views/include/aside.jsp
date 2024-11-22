@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<a href="/comunity"><img src="res/images/logo.png" class="img-fluid log" alt="logo"></a>
+<a href="/comunity"><img src="/comunity/res/images/logo.png" class="img-fluid log" alt="logo"></a>
 
 <sec:authorize access="isAuthenticated()">
    <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
@@ -33,4 +33,16 @@
 	</div>
 	   <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
 	</form>
+	<div class="text-right my-2 mx-3 border-top">
+	  <a href="/comunity/register">회원가입</a>
+	</div>
 </sec:authorize>
+
+<h3 class="mt-5 mb-2">인기 검색어</h3>
+<ul class="list-group">
+   <c:forEach var="keyword" items="${popularKeywords }">
+      <li class="list-group-item">
+         ${keyword.keyword } (${keyword.search_count }회)
+      </li>
+   </c:forEach>
+</ul>

@@ -2,13 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>   
-<c:if test="${adminBbs.rgrade > member.grade }">
+<c:if test="${adminBbs.lgrade > member.grade }">
   <script>
    alert("권한이 없습니다.");
    location.href="/comunity";
   </script>  
 </c:if>
-<div class="p-5 my-4">
+<div class="p-5 my-4 bg-white">
    <h1 class="text-center">${adminBbs.bbstitle }</h1>
    <table class="bbslist table-hover">
       <colgroup>
@@ -35,8 +35,11 @@
            <td class="ellipsis">
               <a href="view?id=${post.id}&bbsid=${adminBbs.id }&pg=${paging.currentPage}">${post.title }</a> 
                 <c:forEach var="ext" items="${post.fileExt }">
-                  <span> ${ext } </span>
+                  <span> <img src="/comunity/res/images/${ext }.svg" width="25"/> </span>
                 </c:forEach>
+                <c:if test="${post.sec == 1 }">
+                   <i class="ri-git-repository-private-line"></i>
+                </c:if>
               </td>
            <td class="ellipsis text-center">${post.writer }</td>
            <td class="text-center">${post.formattedDate }</td>
@@ -72,8 +75,11 @@
           </form>
        </div>
 	   <div class="col-md-7 text-right btn-box">
-	     <a href="bbs.jsp" class="btn btn-success">목록</a>  
-	     <a href="write?bbsid=${adminBbs.id }" class="btn btn-success">글쓰기</a>
+	     <a href="list?bbsid=${adminBbs.id }" class="btn btn-success">목록</a>  
+	     <c:if test="${adminBbs.rgrade == 0 || 
+                       (member != null && member.grade!=null && adminBbs.rgrade <= member.grade)}">
+              <a href="write?bbsid=${adminBbs.id }" class="btn btn-success">글쓰기</a>
+         </c:if>
 	   </div>  
    </div>
    

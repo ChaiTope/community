@@ -28,4 +28,9 @@
    <select id="selectFileByBbsId" parameterType="long" resultType="fileDto">
       SELECT * FROM files WHERE bbsid = #{bbsid}
    </select>
+   
+   <select id="fileById" parameterType="long" resultType="fileDto">
+      SELECT * FROM files WHERE id=#{id}
+   </select>
+   
 </mapper>

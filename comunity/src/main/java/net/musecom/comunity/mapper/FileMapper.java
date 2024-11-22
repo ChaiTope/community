@@ -15,4 +15,5 @@ public interface FileMapper {
   List<FileDto> selectFileByBbsId(long bbsid);
   List<String> selectTrashFile();
   void deleteTrashFile();
+  FileDto fileById(long id);
 }

@@ -27,11 +27,12 @@ public class FileService {
 	   fileUploadService.setAbsolutePath(path);
 	   fileUploadService.setAllowedExt(exts);
 	   fileUploadService.setMaxSize(maxSize);
+	   
 	   FileDto fileDto = fileUploadService.uploadFile(file);
+	   
 	   
 	   //db 저장
 	   fileMapper.insertFile(fileDto);
-	   
 	   return fileDto;
 	}
 	
@@ -45,6 +46,14 @@ public class FileService {
 	
     public List<FileDto> getFilesByBbsId(long bbsid) {
     	return fileMapper.selectFileByBbsId(bbsid);
+    }
+    
+    public FileDto getFile(long fileId) {
+    	return fileMapper.fileById(fileId);
+    }
+    
+    public void deleteFile(long fileId) {
+    	fileMapper.deleteFile(fileId);
     }
     
 }

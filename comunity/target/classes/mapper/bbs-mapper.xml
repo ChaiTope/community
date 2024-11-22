@@ -18,13 +18,30 @@
      WHERE id=#{id}
   </update>
   
+  <!-- 게시물 비번 확인 -->
+  <select id="bbsByIdAndPassword" parameterType="map" resultType="int">
+     select count(*) from bbs where id=#{id} and password=#{password}
+  </select>
   
   
   <!-- 답글 삽입 -->
   
   <!-- 게시물 수정 -->
+  <update id="updateBbs" parameterType="bbs">
+     UPDATE bbs SET 
+       title = #{title},
+       writer = #{writer},
+       content = #{content},
+       sec=#{sec},
+       category=#{category}
+     WHERE id=#{id}
+  </update>
   
   <!-- 게시물 삭제 -->
+  <delete id="deleteBbs" parameterType="long">
+    DELETE FROM bbs WHERE id = #{id}
+  </delete>
+  
   
   <!-- 전체 목록 갯수 조회 --> 
   <select id="selectCountBbs" parameterType="int" resultType="int">
@@ -54,8 +71,16 @@
     LIMIT #{page}, #{recordsPerPage}
   </select>
   
+  <!--  조회수 카운트 -->
+  <update id="updateHit">
+     UPDATE bbs SET hit = hit + 1 WHERE id=#{id}
+  </update>
   
   <!--  상세 조회 -->
+ <select id="viewBbs" resultType="bbs">
+    Select * from bbs where id=#{id}
+ </select>
+  
   
   <!-- 메인페이지 전체 게시물 가져오기 -->
   <select id="selectMainLatestPosts" resultType="map">
@@ -85,5 +110,39 @@
     ]]>
   </select>
   
+  <!--  검색 결과 bbsid 별로 가져오기 -->
+  <select id="searchBbsPostsGrouped" parameterType="map" resultType="bbs">
+     <![CDATA[
+        SELECT
+          b.id, b.bbsid, b.title, b.writer, b.wdate, b.category, b.hit, ba.bbstitle
+        FROM
+          bbs b
+        LEFT JOIN
+          bbs_admin ba on b.bbsid = ba.id
+        WHERE
+          b.title LIKE CONCAT('%', #{searchVal}, '%')
+          OR b.content LIKE CONCAT('%', #{searchVal}, '%')
+        ORDER BY
+          b.bbsid asc, b.wdate desc
+     ]]>
+  </select>
   
+  <!--  인기검색어 등록 -->
+  <insert id="insertSearchKeyword" parameterType="map">
+     INSERT INTO search_keyword
+     (keyword, search_count)
+     VALUES
+     (#{keyword}, 1)
+     ON DUPLICATE KEY UPDATE search_count = search_count + 1
+  </insert>
+  
+  
+  <!-- 인기검색어 조회 -->
+  <select id="selectPopularKeywords" resultType="map">
+     SELECT keyword, SUM(search_count) AS search_count
+     FROM search_keyword
+     GROUP BY keyword
+     ORDER BY search_count DESC
+     LIMIT 20;
+  </select>
 </mapper>
